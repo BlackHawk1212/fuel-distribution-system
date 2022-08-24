@@ -49,7 +49,7 @@ public class OrderController {
     @RequestMapping(value = "/orders/{id}", method = RequestMethod.POST)
     public String confirmOrderReceive(@PathVariable(value = "id") String id) {
         String status = orderService.confirmOrderReceive(id);
-        OrderServiceApplication.logger.info("order-service : Confirmed order receival of " + id);
+        OrderServiceApplication.logger.info("order-service : Confirmed order receive of " + id);
         return status;
     }
 
@@ -91,7 +91,7 @@ public class OrderController {
         }
     }
 
-    @KafkaListener(topics = "dispatchSubmitTopic", groupId = "ceypetco", containerFactory = "sKafkaListenerContainerFactory")
+    @KafkaListener(topics = "dispatchSubmitTopic", groupId = "ceypetco", containerFactory = "stringKafkaListenerContainerFactory")
     void dispatchListener(String id) {
         Order o = orderService.updateOrderDispatch(id, LocalDateTime.now());
         if (o == null) {

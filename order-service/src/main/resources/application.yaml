@@ -1,13 +1,15 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017
       database: order
+      host: localhost
 
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
       group-id: ceypetco
+      auto-offset-reset: earliest
