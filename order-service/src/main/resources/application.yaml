@@ -4,9 +4,8 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017
+      uri: mongodb+srv://root:root@cluster0.i1fcq6k.mongodb.net/test?retryWrites=true&w=majority
       database: order
-      host: localhost
 
   kafka:
     bootstrap-servers: localhost:9092
