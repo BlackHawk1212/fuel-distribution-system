@@ -1,0 +1,14 @@
+server:
+  port: 8082
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://root:root@cluster0.i1fcq6k.mongodb.net/test?retryWrites=true&w=majority
+      database: allocation
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: ceypetco
+      auto-offset-reset: earliest
