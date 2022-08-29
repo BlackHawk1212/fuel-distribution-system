@@ -1,4 +1,4 @@
-package com.ceypetco.allocationservice.config;
+package com.ceypetco.scheduleservice.config;
 
 import com.ceypetco.orderservice.models.Order;
 
@@ -31,15 +31,15 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConsumerFactory<String, Order> inventoryConsumerFactory() {
+    public ConsumerFactory<String, Order> scheduleConsumerFactory() {
         return new DefaultKafkaConsumerFactory<>(consumerConfigs(), new StringDeserializer(),
                 new JsonDeserializer<>(Order.class));
     }
 
     @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Order>> allocationKafkaListenerContainerFactory() {
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Order>> scheduleKafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, Order> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(inventoryConsumerFactory());
+        factory.setConsumerFactory(scheduleConsumerFactory());
         return factory;
     }
 

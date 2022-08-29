@@ -14,16 +14,16 @@ public class Quota implements Cloneable{
     private String orderId;
     private Integer transactionQuantity;
 
-//    OCTANE_92
+    //    OCTANE_92
     private Integer allocatedQuotaOctane92;
     private Integer availableQuantityOctane92;
-//    OCTANE_95
+    //    OCTANE_95
     private Integer allocatedQuotaOctane95;
     private Integer availableQuantityOctane95;
-//    AUTO_DIESEL
+    //    AUTO_DIESEL
     private Integer allocatedQuotaAutoDiesel;
     private Integer availableQuantityAutoDiesel;
-//    SUPER_DIESEL
+    //    SUPER_DIESEL
     private Integer allocatedQuotaSuperDiesel;
     private Integer availableQuantitySuperDiesel;
 

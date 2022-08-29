@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
 @Data
+@AllArgsConstructor
 @Document("order")
 public class Order {
     @Id
@@ -26,4 +27,5 @@ public class Order {
     private LocalDateTime dispatchedTime;
     private boolean delivered; // delivered to the station
     private LocalDateTime deliveredTime;
+
 }

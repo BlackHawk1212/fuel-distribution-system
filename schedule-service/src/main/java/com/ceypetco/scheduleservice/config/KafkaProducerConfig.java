@@ -1,7 +1,6 @@
-package com.ceypetco.allocationservice.config;
+package com.ceypetco.scheduleservice.config;
 
 import com.ceypetco.orderservice.models.Order;
-
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,13 +30,13 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public ProducerFactory<String, Order> inventoryProducerFactory() {
+    public ProducerFactory<String, Order> scheduleProducerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
     @Bean
-    public KafkaTemplate<String, Order> inventoryKafkaTemplate() {
-        return new KafkaTemplate<>(inventoryProducerFactory());
+    public KafkaTemplate<String, Order> scheduleKafkaTemplate() {
+        return new KafkaTemplate<>(scheduleProducerFactory());
     }
 
 }

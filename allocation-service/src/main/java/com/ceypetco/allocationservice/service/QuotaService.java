@@ -1,8 +1,10 @@
-package com.ceypetco.allocationservice.services;
+package com.ceypetco.allocationservice.service;
 
 import com.ceypetco.allocationservice.AllocationServiceApplication;
 import com.ceypetco.allocationservice.models.Quota;
 import com.ceypetco.allocationservice.repository.QuotaRepository;
+import com.ceypetco.orderservice.models.FuelType;
+import com.ceypetco.orderservice.models.Quantity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,19 +21,11 @@ public class QuotaService {
         Integer allocatedSum = 0;
         Integer availableQuantity = 0;
 
-        switch (quantityEnum) {
-            case L3_300:
-                quantityInLitres = 3300;
-                break;
-            case L6_600:
-                quantityInLitres = 6600;
-                break;
-            case L13_200:
-                quantityInLitres = 13200;
-                break;
-            default:
-                throw new IllegalArgumentException("Unexpected value: " + quantityEnum);
-        }
+        quantityInLitres = switch (quantityEnum) {
+            case L3_300 -> 3300;
+            case L6_600 -> 6600;
+            case L13_200 -> 13200;
+        };
 
         Quota previousQuota = quotaRepository.retrieveFinalQuota();
 
@@ -40,7 +34,7 @@ public class QuotaService {
         previousQuota.setTransactionQuantity(quantityInLitres);
 
         switch (fuelType) {
-            case OCTANE92: {
+            case OCTANE92 -> {
                 allocatedSum = previousQuota.getAllocatedQuotaOctane92();
                 availableQuantity = previousQuota.getAvailableQuantityOctane92();
 
@@ -55,7 +49,7 @@ public class QuotaService {
                     return quotaRepository.save(previousQuota);
                 }
             }
-            case OCTANE95: {
+            case OCTANE95 -> {
                 allocatedSum = previousQuota.getAllocatedQuotaOctane95();
                 availableQuantity = previousQuota.getAvailableQuantityOctane95();
 
@@ -71,7 +65,7 @@ public class QuotaService {
                     return quotaRepository.save(previousQuota);
                 }
             }
-            case AUTO_DIESEL: {
+            case AUTO_DIESEL -> {
                 allocatedSum = previousQuota.getAllocatedQuotaAutoDiesel();
                 availableQuantity = previousQuota.getAvailableQuantityAutoDiesel();
 
@@ -87,7 +81,7 @@ public class QuotaService {
                     return quotaRepository.save(previousQuota);
                 }
             }
-            case SUPER_DIESEL: {
+            case SUPER_DIESEL -> {
                 allocatedSum = previousQuota.getAllocatedQuotaSuperDiesel();
                 availableQuantity = previousQuota.getAvailableQuantitySuperDiesel();
 
@@ -103,7 +97,7 @@ public class QuotaService {
                     return quotaRepository.save(previousQuota);
                 }
             }
-            default: {
+            default -> {
                 return null;
             }
         }
@@ -113,24 +107,24 @@ public class QuotaService {
         return quotaRepository.retrieveSpecificRecord(id);
     }
 
-    public void initializeInventory(int initialQuantityO92, int emergencyAllocationO92, int initialQuantityO95,
-                                    int emergencyAllocationO95, int initialQuantityRD, int emergencyAllocationRD, int initialQuantitySD,
-                                    int emergencyAllocationSD) {
+    public void initializeInventory(int initialQuantityOct92, int emergencyAllocationOct92, int initialQuantityOct95,
+                                    int emergencyAllocationOct95, int initialQuantityAutoDiesel, int emergencyAllocationAutoDiesel, int initialQuantitySuperDiesel,
+                                    int emergencyAllocationSuperDiesel) {
         Quota initialQuota = new Quota(LocalDateTime.now().toString(), "00000000");
 
-        initialQuota.setAllocatedQuotaOctane92(emergencyAllocationO92);
-        initialQuota.setAvailableQuantityOctane92(initialQuantityO92);
+        initialQuota.setAllocatedQuotaOctane92(emergencyAllocationOct92);
+        initialQuota.setAvailableQuantityOctane92(initialQuantityOct92);
 
-        initialQuota.setAllocatedQuotaOctane95(emergencyAllocationO95);
-        initialQuota.setAvailableQuantityOctane95(initialQuantityO95);
+        initialQuota.setAllocatedQuotaOctane95(emergencyAllocationOct95);
+        initialQuota.setAvailableQuantityOctane95(initialQuantityOct95);
 
-        initialQuota.setAllocatedQuotaAutoDiesel(emergencyAllocationRD);
-        initialQuota.setAvailableQuantityAutoDiesel(initialQuantityRD);
+        initialQuota.setAllocatedQuotaAutoDiesel(emergencyAllocationAutoDiesel);
+        initialQuota.setAvailableQuantityAutoDiesel(initialQuantityAutoDiesel);
 
-        initialQuota.setAllocatedQuotaAutoDiesel(emergencyAllocationSD);
-        initialQuota.setAvailableQuantityAutoDiesel(initialQuantitySD);
+        initialQuota.setAllocatedQuotaAutoDiesel(emergencyAllocationSuperDiesel);
+        initialQuota.setAvailableQuantityAutoDiesel(initialQuantitySuperDiesel);
 
-        Quota quota = quotaRepository.save(initialQuota);
+        quotaRepository.save(initialQuota);
     }
 
 }

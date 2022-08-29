@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-@SpringBootApplication
 @EnableMongoRepositories
+@SpringBootApplication
 @EntityScan("com.ceypetco.orderservice.models")
 public class OrderServiceApplication {
 

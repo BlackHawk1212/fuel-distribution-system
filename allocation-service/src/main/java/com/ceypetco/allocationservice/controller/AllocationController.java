@@ -2,7 +2,8 @@ package com.ceypetco.allocationservice.controller;
 
 import com.ceypetco.allocationservice.AllocationServiceApplication;
 import com.ceypetco.allocationservice.models.Quota;
-import com.ceypetco.allocationservice.services.QuotaService;
+import com.ceypetco.allocationservice.service.QuotaService;
+import com.ceypetco.orderservice.models.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class AllocationController {
-    private KafkaTemplate<String, Order> allocationKafkaTemplate;
+    private final KafkaTemplate<String, Order> allocationKafkaTemplate;
     private KafkaTemplate<String, String> stringInventoryKafkaTemplate;
 
     public AllocationController(KafkaTemplate<String, Order> allocationKafkaTemplate, KafkaTemplate<String, String> stringInventoryKafkaTemplate) {
@@ -34,26 +35,26 @@ public class AllocationController {
         }
     }
 
-    @KafkaListener(topics = "quantityUpdateTopic", groupId = "cpc", containerFactory = "sOrderKafkaListenerContainerFactory")
+    @KafkaListener(topics = "quantityUpdateTopic", groupId = "ceypetco", containerFactory = "stringOrderKafkaListenerContainerFactory")
     void listener(String id) {
         Quota quota = quotaService.updateQuantities(id);
 
         if (quota == null) {
             AllocationServiceApplication.logger
-                    .info("inventory-service : (order serive -> dispatch service) couldn't update quantities");
+                    .info("inventory-service : (order service -> dispatch service) couldn't update quantities");
         } else {
             AllocationServiceApplication.logger
-                    .info("inventory-service : (order serive -> dispatch service) updated quantities for" + id);
+                    .info("inventory-service : (order service -> dispatch service) updated quantities for" + id);
         }
 
     }
 
-    public void initializeInventory(int initialQuantityO92, int emergencyAllocationO92, int initialQuantityO95,
-                                    int emergencyAllocationO95, int initialQuantityRD, int emergencyAllocationRD, int initialQuantitySD,
-                                    int emergencyAllocationSD) {
-        quotaService.initializeInventory(initialQuantityO92, emergencyAllocationO92, initialQuantityO95,
-                emergencyAllocationO95, initialQuantityRD, emergencyAllocationRD, initialQuantitySD,
-                emergencyAllocationSD);
+    public void initializeInventory(int initialQuantityOct92, int emergencyAllocationOct92, int initialQuantityOct95,
+                                    int emergencyAllocationOct95, int initialQuantityAutoDiesel, int emergencyAllocationAutoDiesel, int initialQuantitySuperDiesel,
+                                    int emergencyAllocationSuperDiesel) {
+        quotaService.initializeInventory(initialQuantityOct92, emergencyAllocationOct92, initialQuantityOct95,
+                emergencyAllocationOct95, initialQuantityAutoDiesel, emergencyAllocationAutoDiesel, initialQuantitySuperDiesel,
+                emergencyAllocationSuperDiesel);
     }
 
 }

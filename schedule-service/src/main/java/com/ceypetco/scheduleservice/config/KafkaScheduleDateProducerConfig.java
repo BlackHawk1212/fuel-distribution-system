@@ -1,12 +1,10 @@
-package com.ceypetco.allocationservice.config;
+package com.ceypetco.scheduleservice.config;
 
-import com.ceypetco.orderservice.models.Order;
-
+import com.ceypetco.scheduleservice.dto.ScheduleDateDTO;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
@@ -15,14 +13,13 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 import java.util.HashMap;
 import java.util.Map;
 
-@Configuration
-public class KafkaProducerConfig {
+public class KafkaScheduleDateProducerConfig {
 
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
     @Bean
-    public Map<String, Object> producerConfigs() {
+    public Map<String, Object> scheduleDateProducerConfigs() {
         Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -31,13 +28,13 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public ProducerFactory<String, Order> inventoryProducerFactory() {
-        return new DefaultKafkaProducerFactory<>(producerConfigs());
+    public ProducerFactory<String, ScheduleDateDTO> scheduleDateProducerFactory() {
+        return new DefaultKafkaProducerFactory<>(scheduleDateProducerConfigs());
     }
 
     @Bean
-    public KafkaTemplate<String, Order> inventoryKafkaTemplate() {
-        return new KafkaTemplate<>(inventoryProducerFactory());
+    public KafkaTemplate<String, ScheduleDateDTO> scheduleDispatchKafkaTemplate() {
+        return new KafkaTemplate<>(scheduleDateProducerFactory());
     }
 
 }

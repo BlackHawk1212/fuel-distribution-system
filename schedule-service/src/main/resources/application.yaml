@@ -5,7 +5,7 @@ spring:
   data:
     mongodb:
       uri: mongodb+srv://root:root@cluster0.i1fcq6k.mongodb.net/test?retryWrites=true&w=majority
-      database: allocation
+      database: schedule
 
   kafka:
     bootstrap-servers: localhost:9092

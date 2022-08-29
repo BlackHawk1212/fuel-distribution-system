@@ -44,25 +44,23 @@ public class QuotaRepositoryImplementation implements QuotaRepositoryInterface{
 
     private void updateQuantities(Quota quota, String fuelTypeString, int quantity) {
         switch (fuelTypeString) {
-            case "Oct92":
+            case "Oct92" -> {
                 quota.setAllocatedQuotaOctane92(quota.getAllocatedQuotaOctane92() - quantity);
                 quota.setAvailableQuantityOctane92(quota.getAvailableQuantityOctane92() - quantity);
-                break;
-            case "Oct95":
+            }
+            case "Oct95" -> {
                 quota.setAllocatedQuotaOctane95(quota.getAllocatedQuotaOctane95() - quantity);
                 quota.setAvailableQuantityOctane95(quota.getAvailableQuantityOctane95() - quantity);
-                break;
-            case "AutoD":
+            }
+            case "AutoD" -> {
                 quota.setAllocatedQuotaAutoDiesel(quota.getAllocatedQuotaAutoDiesel() - quantity);
                 quota.setAvailableQuantityAutoDiesel(quota.getAvailableQuantityAutoDiesel() - quantity);
-                break;
-            case "SuperD":
+            }
+            case "SuperD" -> {
                 quota.setAllocatedQuotaSuperDiesel(quota.getAllocatedQuotaSuperDiesel() - quantity);
                 quota.setAvailableQuantitySuperDiesel(quota.getAvailableQuantitySuperDiesel() - quantity);
-                break;
-            default:
-                System.out.println("Fuel Type mismatched");
-                break;
+            }
+            default -> System.out.println("Fuel Type mismatched");
         }
     }
 

@@ -14,7 +14,7 @@
     <name>schedule-service</name>
     <description>schedule-service</description>
     <properties>
-        <java.version>15</java.version>
+        <java.version>17</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -34,7 +34,6 @@
             <artifactId>order-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -43,6 +42,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
