@@ -33,7 +33,7 @@ public class KafkaProducerStringConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, String> sOrderKafkaTemplate() {
+    public KafkaTemplate<String, String> stringOrderKafkaTemplate() {
         return new KafkaTemplate<>(stringOrderProducerFactory());
     }
 

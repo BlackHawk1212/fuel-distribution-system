@@ -19,12 +19,12 @@ public class OrderController {
     OrderService orderService;
 
     private final KafkaTemplate<String, Order> orderKafkaTemplate;
-    private final KafkaTemplate<String, String> sOrderKafkaTemplate;
+    private final KafkaTemplate<String, String> stringOrderKafkaTemplate;
 
     public OrderController(KafkaTemplate<String, Order> orderKafkaTemplate,
-                           KafkaTemplate<String, String> sOrderKafkaTemplate) {
+                           KafkaTemplate<String, String> stringOrderKafkaTemplate) {
         this.orderKafkaTemplate = orderKafkaTemplate;
-        this.sOrderKafkaTemplate = sOrderKafkaTemplate;
+        this.stringOrderKafkaTemplate = stringOrderKafkaTemplate;
     }
 
     @RequestMapping(value = "/orders", method = RequestMethod.POST)
@@ -56,7 +56,6 @@ public class OrderController {
     @RequestMapping(value = "/orders", method = RequestMethod.GET)
     public Object fetch() {
         List<Order> orders = orderService.fetchAllOrders();
-
         if (orders == null) {
             return "Order list is empty.";
         } else {
@@ -69,13 +68,10 @@ public class OrderController {
     void inventoryListener(Order order) {
         Order odr = orderService.updateOrderAllocation(order.getId());
         if (odr == null) {
-            OrderServiceApplication.logger
-                    .info("order-service : (From inventory service) Error in updating order allocation status");
+            OrderServiceApplication.logger.info("order-service : (From inventory service) Error in updating order allocation status");
         } else {
-            OrderServiceApplication.logger
-                    .info("order-service : (From inventory service) Updated allocation status to: " + odr);
-            orderKafkaTemplate.send("scheduleCreateTopic",
-                    "Kafka : Submitted order " + odr.getId() + " to scheduleSubmitTopic", odr);
+            OrderServiceApplication.logger.info("order-service : (From inventory service) Updated allocation status to: " + odr);
+            orderKafkaTemplate.send("scheduleCreateTopic", "Kafka : Submitted order " + odr.getId() + " to scheduleSubmitTopic", odr);
         }
     }
 
@@ -83,11 +79,9 @@ public class OrderController {
     void scheduleListener(Order order) {
         Order o = orderService.updateOrderSchedule(order.getId(), order.getScheduledTime());
         if (o == null) {
-            OrderServiceApplication.logger
-                    .info("order-service : (From schedule service) Error in updating order schedule status");
+            OrderServiceApplication.logger.info("order-service : (From schedule service) Error in updating order schedule status");
         } else {
-            OrderServiceApplication.logger
-                    .info("order-service : (From schedule service) Updated schedule status to: " + o);
+            OrderServiceApplication.logger.info("order-service : (From schedule service) Updated schedule status to: " + o);
         }
     }
 
@@ -95,14 +89,11 @@ public class OrderController {
     void dispatchListener(String id) {
         Order o = orderService.updateOrderDispatch(id, LocalDateTime.now());
         if (o == null) {
-            OrderServiceApplication.logger
-                    .info("order-service : (From dispatch service) Error in updating order dispatch status");
+            OrderServiceApplication.logger.info("order-service : (From dispatch service) Error in updating order dispatch status");
         } else {
-            OrderServiceApplication.logger
-                    .info("order-service : (From dispatch service) Updated dispatch status to: " + o);
+            OrderServiceApplication.logger.info("order-service : (From dispatch service) Updated dispatch status to: " + o);
         }
-        sOrderKafkaTemplate.send("quantityUpdateTopic", "Kafka : Submitted orderId " + id + " to quantityUpdateTopic",
-                id);
+        stringOrderKafkaTemplate.send("quantityUpdateTopic", "Kafka : Submitted orderId " + id + " to quantityUpdateTopic", id);
     }
 
 }

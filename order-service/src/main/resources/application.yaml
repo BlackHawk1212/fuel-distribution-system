@@ -12,3 +12,4 @@ spring:
     consumer:
       group-id: ceypetco
       auto-offset-reset: earliest
+      enable-auto-commit: false

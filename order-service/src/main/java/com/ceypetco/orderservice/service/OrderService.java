@@ -42,7 +42,7 @@ public class OrderService {
             case SUPER_DIESEL:
                 return "SD";
             default:
-                System.out.println("No such FuelType. Can't create fId");
+                System.out.println("No such FuelType Found. Can't create fId");
                 throw new IllegalArgumentException();
         }
     }
@@ -91,7 +91,7 @@ public class OrderService {
     }
 
     public List<Order> fetchAllOrders() {
-        return (List<Order>) orderRepository.findAll();
+        return orderRepository.findAll();
     }
 
     public Order updateOrderAllocation(String id) {
