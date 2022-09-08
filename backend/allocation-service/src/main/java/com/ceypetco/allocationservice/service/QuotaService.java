@@ -11,28 +11,31 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 @Service
-public class QuotaService {
+public class QuotaService implements QuotaServiceInterface{
 
     @Autowired
     QuotaRepository quotaRepository;
 
+    @Override
     public Quota submitQuotaRecord(String id, Quantity quantityEnum, FuelType fuelType) {
 
         Integer quantityInLitres = 0;
-        Integer allocatedSum = 0;
-        Integer availableQuantity = 0;
 
-        quantityInLitres = switch (quantityEnum) {
-            case L3_300 -> 3300;
-            case L6_600 -> 6600;
-            case L13_200 -> 13200;
-        };
+        switch (quantityEnum) {
+            case L3_300 -> quantityInLitres = 3300;
+            case L6_600 -> quantityInLitres = 6600;
+            case L13_200 -> quantityInLitres = 13200;
+            default -> throw new IllegalArgumentException("Unexpected value: " + quantityEnum);
+        }
 
         Quota previousQuota = quotaRepository.retrieveFinalQuota();
 
         previousQuota.setOrderId(id);
         previousQuota.setTimeStamp(LocalDateTime.now().toString());
         previousQuota.setTransactionQuantity(quantityInLitres);
+
+        Integer allocatedSum = 0;
+        Integer availableQuantity = 0;
 
         switch (fuelType) {
             case OCTANE92 -> {
@@ -44,8 +47,7 @@ public class QuotaService {
                 } else {
                     previousQuota.setAllocatedQuotaOctane92(allocatedSum + quantityInLitres);
                     AllocationServiceApplication.logger
-                            .info("allocation-service : AllocatedQuantitySum of Octane 92 changed from " + allocatedSum
-                                    + " to " + (allocatedSum + quantityInLitres));
+                            .info("allocation-service : AllocatedQuantitySum of Octane 92 changed from " + allocatedSum + " to " + (allocatedSum + quantityInLitres));
 
                     return quotaRepository.save(previousQuota);
                 }
@@ -60,8 +62,7 @@ public class QuotaService {
                     previousQuota.setAllocatedQuotaOctane95(allocatedSum + quantityInLitres);
 
                     AllocationServiceApplication.logger
-                            .info("allocation-service : AllocatedQuantitySum of Octane 95 changed from " + allocatedSum
-                                    + " to " + (allocatedSum + quantityInLitres));
+                            .info("allocation-service : AllocatedQuantitySum of Octane 95 changed from " + allocatedSum + " to " + (allocatedSum + quantityInLitres));
 
                     return quotaRepository.save(previousQuota);
                 }
@@ -76,8 +77,7 @@ public class QuotaService {
                     previousQuota.setAllocatedQuotaAutoDiesel(allocatedSum + quantityInLitres);
 
                     AllocationServiceApplication.logger
-                            .info("allocation-service : AllocatedQuantitySum of Regular Diesel changed from " + allocatedSum
-                                    + " to " + (allocatedSum + quantityInLitres));
+                            .info("allocation-service : AllocatedQuantitySum of Regular Diesel changed from " + allocatedSum + " to " + (allocatedSum + quantityInLitres));
 
                     return quotaRepository.save(previousQuota);
                 }
@@ -92,8 +92,7 @@ public class QuotaService {
                     previousQuota.setAllocatedQuotaSuperDiesel(allocatedSum + quantityInLitres);
 
                     AllocationServiceApplication.logger
-                            .info("inventory-service : AllocatedQuantitySum of Super Diesel changed from " + allocatedSum
-                                    + " to " + (allocatedSum + quantityInLitres));
+                            .info("inventory-service : AllocatedQuantitySum of Super Diesel changed from " + allocatedSum + " to " + (allocatedSum + quantityInLitres));
 
                     return quotaRepository.save(previousQuota);
                 }
@@ -104,13 +103,16 @@ public class QuotaService {
         }
     }
 
+    @Override
     public Quota updateQuantities(String id) {
         return quotaRepository.retrieveSpecificRecord(id);
     }
 
+    @Override
     public void initializeInventory(int initialQuantityOct92, int emergencyAllocationOct92, int initialQuantityOct95,
                                     int emergencyAllocationOct95, int initialQuantityAutoDiesel, int emergencyAllocationAutoDiesel, int initialQuantitySuperDiesel,
                                     int emergencyAllocationSuperDiesel) {
+
         Quota initialQuota = new Quota(LocalDateTime.now().toString(), "00000000");
 
         initialQuota.setAllocatedQuotaOctane92(emergencyAllocationOct92);
@@ -126,6 +128,7 @@ public class QuotaService {
         initialQuota.setAvailableQuantityAutoDiesel(initialQuantitySuperDiesel);
 
         quotaRepository.save(initialQuota);
+
     }
 
 }

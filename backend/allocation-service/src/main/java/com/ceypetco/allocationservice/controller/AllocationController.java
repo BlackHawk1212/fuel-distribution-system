@@ -7,15 +7,16 @@ import com.ceypetco.orderservice.model.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class AllocationController {
 
-    private final KafkaTemplate<String, Order> allocationKafkaTemplate;
-    private final KafkaTemplate<String, String> stringInventoryKafkaTemplate;
+    private KafkaTemplate<String, Order> allocationKafkaTemplate;
+    private KafkaTemplate<String, String> stringInventoryKafkaTemplate;
 
-    public AllocationController(KafkaTemplate<String, Order> allocationKafkaTemplate, KafkaTemplate<String, String> stringInventoryKafkaTemplate) {
+    public AllocationController(KafkaTemplate<String, Order> allocationKafkaTemplate,
+                               KafkaTemplate<String, String> stringInventoryKafkaTemplate) {
         this.allocationKafkaTemplate = allocationKafkaTemplate;
         this.stringInventoryKafkaTemplate = stringInventoryKafkaTemplate;
     }
@@ -38,14 +39,15 @@ public class AllocationController {
 
     @KafkaListener(topics = "quantityUpdateTopic", groupId = "ceypetco", containerFactory = "stringOrderKafkaListenerContainerFactory")
     void listener(String id) {
+
         Quota quota = quotaService.updateQuantities(id);
 
         if (quota == null) {
             AllocationServiceApplication.logger
-                    .info("inventory-service : (order service -> dispatch service) couldn't update quantities");
+                    .info("allocation-service : (order service -> dispatch service) couldn't update quantities");
         } else {
             AllocationServiceApplication.logger
-                    .info("inventory-service : (order service -> dispatch service) updated quantities for" + id);
+                    .info("allocation-service : (order service -> dispatch service) updated quantities for" + id);
         }
 
     }
@@ -57,6 +59,5 @@ public class AllocationController {
                 emergencyAllocationOct95, initialQuantityAutoDiesel, emergencyAllocationAutoDiesel, initialQuantitySuperDiesel,
                 emergencyAllocationSuperDiesel);
     }
-
 
 }

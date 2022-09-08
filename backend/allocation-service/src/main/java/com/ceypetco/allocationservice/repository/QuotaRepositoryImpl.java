@@ -9,10 +9,10 @@ import org.springframework.data.mongodb.core.query.Query;
 
 import java.time.LocalDateTime;
 
-public class QuotaRepositoryImplementation implements QuotaRepositoryInterface{
+public class QuotaRepositoryImpl implements QuotaRepositoryInterface{
 
     @Autowired
-    MongoTemplate mongoTemplate;
+    private MongoTemplate mongoTemplate;
 
     @Override
     public Quota retrieveFinalQuota() {
@@ -30,9 +30,10 @@ public class QuotaRepositoryImplementation implements QuotaRepositoryInterface{
         Quota quotaByTimestamp = this.retrieveFinalQuota();
 
         Quota newQuota = quotaByTimestamp.clone();
-        assert quotaById != null;
+
         int quantity = quotaById.getTransactionQuantity();
         newQuota.setTransactionQuantity(quantity);
+
         newQuota.setTimeStamp(LocalDateTime.now().toString());
         newQuota.setOrderId(id);
 
@@ -40,6 +41,7 @@ public class QuotaRepositoryImplementation implements QuotaRepositoryInterface{
         updateQuantities(newQuota, fuelTypeString, quantity);
         System.out.println("Created new quota record :" + newQuota);
         return mongoTemplate.save(newQuota);
+
     }
 
     private void updateQuantities(Quota quota, String fuelTypeString, int quantity) {

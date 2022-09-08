@@ -30,7 +30,7 @@ public class KafkaConsumer {
     }
 
     @Bean
-    public ConsumerFactory<String, Order> inventoryConsumerFactory() {
+    public ConsumerFactory<String, Order> allocationConsumerFactory() {
         return new DefaultKafkaConsumerFactory<>(consumerConfigs(), new StringDeserializer(),
                 new JsonDeserializer<>(Order.class));
     }
@@ -38,7 +38,7 @@ public class KafkaConsumer {
     @Bean
     public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Order>> allocationKafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, Order> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(inventoryConsumerFactory());
+        factory.setConsumerFactory(allocationConsumerFactory());
         return factory;
     }
 

@@ -28,13 +28,13 @@ public class KafkaProducerString {
     }
 
     @Bean
-    public ProducerFactory<String, String> stringInventoryProducerFactory() {
+    public ProducerFactory<String, String> stringAllocationProducerFactory() {
         return new DefaultKafkaProducerFactory<>(stringProducerConfigs());
     }
 
     @Bean
     public KafkaTemplate<String, String> stringOrderKafkaTemplate() {
-        return new KafkaTemplate<>(stringInventoryProducerFactory());
+        return new KafkaTemplate<>(stringAllocationProducerFactory());
     }
 
 }
