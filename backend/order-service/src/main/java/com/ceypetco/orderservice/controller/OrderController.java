@@ -31,8 +31,7 @@ public class OrderController {
     @PostMapping
     public Order submitOrder(@RequestBody Order order) {
         Order o = orderService.submitOrder(order.getStationId(), order);
-        orderKafkaTemplate.send("orderCreateTopic", "Kafka : Submitted order " + o.getId() + " to orderSubmitTopic", o);
-
+        orderKafkaTemplate.send("orderCreateTopic", "Kafka : Submitted order " + o.getId() + " to orderSubmitTopic",o);
         OrderServiceApplication.logger.info("order-service : Submitted order " + o.getId() + " to orderSubmitTopic");
         return o;
     }
