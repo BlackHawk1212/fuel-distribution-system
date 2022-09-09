@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { MongooseModule } from '@nestjs/mongoose';
+import { MONGO_CONNECTION } from './app.properties';
 import { DispatchModule } from './dispatch/dispatch.module';
 
 @Module({
-  imports: [DispatchModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [DispatchModule, MongooseModule.forRoot(MONGO_CONNECTION)],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

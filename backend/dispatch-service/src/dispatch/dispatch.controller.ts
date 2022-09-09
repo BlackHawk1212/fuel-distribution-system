@@ -9,9 +9,7 @@ const kafkaPort = process.env.KAFKA_PORT || '9092';
 @Controller('dispatch')
 export class DispatchController {
 
-  constructor(private dispatchService: DispatchService) {
-
-  }
+  constructor(private dispatchService: DispatchService) {}
 
   @Get()
   @UsePipes(ValidationPipe)
@@ -42,7 +40,7 @@ export class DispatchController {
         brokers: [`${kafkaHost}:${kafkaPort}`],
       },
       consumer: {
-        groupId: 'cpc',
+        groupId: 'ceypetco',
       },
     },
   })
