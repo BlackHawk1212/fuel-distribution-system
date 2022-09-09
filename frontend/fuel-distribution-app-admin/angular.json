@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "fuel-distribution-app": {
+    "fuel-distribution-app-admin": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/fuel-distribution-app",
+            "outputPath": "dist/fuel-distribution-app-admin",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -64,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "fuel-distribution-app:build:production"
+              "browserTarget": "fuel-distribution-app-admin:build:production"
             },
             "development": {
-              "browserTarget": "fuel-distribution-app:build:development"
+              "browserTarget": "fuel-distribution-app-admin:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -75,7 +75,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "fuel-distribution-app:build"
+            "browserTarget": "fuel-distribution-app-admin:build"
           }
         },
         "test": {
@@ -97,8 +97,5 @@
         }
       }
     }
-  },
-  "cli": {
-    "analytics": "72f56220-c099-4f36-8155-93add34aa9e9"
   }
 }
