@@ -17,7 +17,7 @@ async function bootstrap() {
         brokers: [`${kafkaHost}:${kafkaPort}`],
       },
       consumer: {
-        groupId: 'cpc',
+        groupId: 'ceypetco',
       },
     },
   });
