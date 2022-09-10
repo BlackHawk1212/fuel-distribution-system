@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { OrderModel } from '../order-model';
+import { OrderService } from '../order.service';
 
 @Component({
   selector: 'app-order-create',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderCreateComponent implements OnInit {
 
-  constructor() { }
+  orderModel:OrderModel = new OrderModel();
+  constructor(private orderService:OrderService,) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  submitOrder(){
+    this.orderService.submitOrder(this.orderModel).subscribe(data => {
+      console.log(this.orderModel);
+    },
+    error => console.log(error))
+  }
+
+  realodPage(){
+    location.reload();
   }
 
 }
