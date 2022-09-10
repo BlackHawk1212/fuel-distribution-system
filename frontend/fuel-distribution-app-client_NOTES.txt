@@ -1,0 +1,16 @@
+Create components in fuel-distribution-app-client (Use the cmd or terminal in project directory)
+* with .spec file (Which is no need to keep) #DELETE it#
+	> ng g c order-create
+	> ng g c check-orders
+	> ng g c order-recieved-confirmation
+
+
+Create services in fuel-distribution-app-client (Use the cmd or terminal in project directory)
+* with .spec file (Which is no need to keep) #DELETE it#
+	> ng g s add-order-service
+	> ng g s order
+
+
+Create classes in fuel-distribution-app-client (Use the cmd or terminal in project directory)
+* with .spec file (Which is no need to keep) #DELETE it#
+	> ng g class orderModel
