@@ -21,8 +21,8 @@ export class OrderCreateComponent implements OnInit {
     error => console.log(error))
   }
 
-  realodPage(){
-    location.reload();
-  }
+  // realodPage(){
+  //   location.reload();
+  // }
 
 }

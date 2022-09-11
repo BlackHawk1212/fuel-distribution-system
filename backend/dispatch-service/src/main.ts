@@ -22,7 +22,7 @@ async function bootstrap() {
     },
   });
   app.enableCors();
-  app.use(cors({ origin: 'http://localhost:3000' }));
+  app.use(cors({ origin: 'http://localhost:4200' }));
   await app.startAllMicroservices();
   await app.listen(8084, () => 'dispatch-service started...');
 }

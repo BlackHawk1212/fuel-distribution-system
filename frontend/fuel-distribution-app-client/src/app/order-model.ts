@@ -1,8 +1,11 @@
+import { FuelType } from "./fuelType";
+import { Quantity } from "./quantity";
+
 export class OrderModel {
     id!:string; // reference id
     stationId!:string;
-    fuelType!:string;
-    quantity!:string;
+    fuelType!:FuelType;
+    quantity!:Quantity;
     reserved!:boolean; // station created the order
     reservedTime!:string;
     qtyAllocated!:boolean; // quantity got allocated

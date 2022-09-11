@@ -5,26 +5,26 @@
         <form (ngSubmit)="submitOrder()">
           <div class="form-group">
             <label >Gas Station Name</label>
-            <input type="text" class="form-control" placeholder="Gas Station Name" id="gasStationName" name="gasStationName" [(ngModel)]="orderModel.stationId" >
+            <input type="text" class="form-control" placeholder="Gas Station Name" id="stationId" name="stationId" [(ngModel)]="orderModel.stationId" >
           </div>
           <div class="form-group mt-sm-2" >
             <label >Fuel Type</label>
             <select class="form-select" id="fuelType" name="fuelType" [(ngModel)]="orderModel.fuelType">
                 <option value="AUTO_DIESEL">AUTO_DIESEL</option>
                 <option value="SUPER_DIESEL">SUPER_DIESEL</option>
-                <option value="OCTANE_92">OCTANE92</option>
-                <option value="OCTANE_95">OCTANE95</option>
+                <option value="OCTANE92">OCTANE_92</option>
+                <option value="OCTANE95">OCTANE_95</option>
             </select>
           </div>
           <div class="form-group mt-sm-2">
             <label >Quantity (Litres)</label>
-            <select class="form-select" id="amount" name="amount" [(ngModel)]="orderModel.quantity">
+            <select class="form-select" id="quantity" name="quantity" [(ngModel)]="orderModel.quantity">
               <option value="L3_300">L3_300</option>
               <option value="L6_600">L6_600</option>
               <option value="L13_200">L13_200</option>
             </select>
           </div>
-          <button type="SUBMIT" class="btn btn-primary mt-sm-2" (click)="realodPage()">Submit</button>
+          <button type="submit" class="btn btn-primary mt-sm-2">SUBMIT</button>
         </form>
       </div>
     </div>
