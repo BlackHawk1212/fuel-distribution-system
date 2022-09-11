@@ -12,6 +12,7 @@ export class OrderService {
   constructor(private httpClient: HttpClient) { }
 
   fetchAllOrders(): Observable<OrderModel[]> {
+    console.log(OrderModel);
     return this.httpClient.get<OrderModel[]>(`${this.baseURL}`);
   }
 

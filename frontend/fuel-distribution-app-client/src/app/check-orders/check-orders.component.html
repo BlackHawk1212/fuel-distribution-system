@@ -1,1 +1,36 @@
-<p>check-orders works!</p>
+<div class="container">
+    <div class="row">
+      <div class="col-md">
+  <h1>All Order Records</h1>
+  <br>
+  <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Order Id</th>
+          <th scope="col">Gas Station Id</th>
+          <th scope="col">Fuel Type</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Order Reserved</th>
+          <th scope="col">Reserved Time</th>
+          <th scope="col">Order Scheduled</th>
+          <th scope="col">Order Dispatched</th>
+          <th scope="col">Order Delivered</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor = "let orderModel of orders ">
+          <td>{{orderModel.id}}</td>
+          <td>{{orderModel.stationId}}</td>
+          <td>{{orderModel.fuelType}}</td>
+          <td>{{orderModel.quantity}}</td>
+          <td>{{orderModel.reserved}}</td>
+          <td>{{orderModel.reservedTime}}</td>
+          <td>{{orderModel.scheduled}}</td>
+          <td>{{orderModel.dispatched}}</td>
+          <td>{{orderModel.delivered}}</td>
+        </tr>
+      </tbody>
+    </table>
+      </div>
+    </div>
+  </div>
