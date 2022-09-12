@@ -1,1 +1,58 @@
-<p>order-recieved-confirmation works!</p>
+<div class="container w-25">
+    <div class="row">
+        <div class="col-md registration">
+            <h2>Submit Order Received Status</h2>
+            <br>
+            <div class="form-group mt-sm-2">
+                <label>Gas Station ID</label>
+                <input type="text" class="form-control" placeholder="Gas Station ID" [(ngModel)]="id">
+            </div>
+            <button type="button" class="btn btn-primary mt-sm-2" (click)="getOrderById()">SUBMIT</button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <h1>All Order Records</h1>
+            <br>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Order Id</th>
+                        <th scope="col">Gas Station Id</th>
+                        <th scope="col">Fuel Type</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Order Reserved</th>
+                        <th scope="col">Reserved Time</th>
+                        <th scope="col">Order Scheduled</th>
+                        <th scope="col">Order Dispatched</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="datas">
+                        <td>{{this.datas.id}}</td>
+                        <td>{{this.datas.stationId}}</td>
+                        <td>{{this.datas.fuelType}}</td>
+                        <td>{{this.datas.quantity}}</td>
+                        <td>{{this.datas.reserved}}</td>
+                        <td>{{this.datas.reservedTime}}</td>
+                        <td>{{this.datas.scheduled}}</td>
+                        <td *ngIf="datas.dispatched 'true'"><button type="button" class="btn btn-primary mt-sm-2" (click)="getOrderComplete(datas.id)">Completed</button></td>
+                    </tr>
+                    <!-- <tr *ngFor = "let order of orders">
+                        <td>{{order.id}}</td>
+                        <td>{{order.stationId}}</td>
+                        <td>{{order.fuelType}}</td>
+                        <td>{{order.quantity}}</td>
+                        <td>{{order.reserved}}</td>
+                        <td>{{order.reservedTime}}</td>
+                        <td>{{order.scheduled}}</td>
+                        <td *ngIf="order.dispatched 'true'"><button type="button" class="btn btn-primary mt-sm-1 mb-sm-1" (click)="getOrderComplete(order.id)">Completed</button></td>
+                      </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -10,24 +10,21 @@ import { OrderService } from '../order.service';
 
 export class CheckOrdersComponent implements OnInit {
 
-  id!:string;
-  scheduled!:string;
+  id!: string;
+  scheduled!: string;
   orders!: OrderModel[];
   datas: any;
 
   constructor(private orderService: OrderService) { }
 
-  ngOnInit(): void {
-    // this.datas.id = "";
-  }
+  ngOnInit(): void { }
 
-   getOrderById(){
-    this.orderService.getOrderById(this.id).subscribe(data =>{
-      // this.orders = data;
-      this.datas = data; 
+  getOrderById() {
+    this.orderService.getOrderById(this.id).subscribe(data => {
+      this.datas = data;
       console.log(data);
     },
-    error => console.log(error));
+      error => console.log(error));
   }
 
 }
