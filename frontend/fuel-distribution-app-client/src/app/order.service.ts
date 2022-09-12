@@ -9,6 +9,7 @@ import { OrderModel } from './order-model';
 export class OrderService {
 
   private baseURL = "http://localhost:8081/services/orders";
+  private searchURL = "http://localhost:8081/services/orders/search";
   constructor(private httpClient: HttpClient) { }
 
   fetchAllOrders(): Observable<OrderModel[]> {
@@ -22,7 +23,7 @@ export class OrderService {
   }
 
   getOrderById(id:string): Observable<OrderModel[]> {
-    return this.httpClient.get<OrderModel[]>(`${this.baseURL}/${id}`);
+    return this.httpClient.get<OrderModel[]>(`${this.searchURL}/${id}`);
   }
 
   getOrderComplete(id:string, reserved:string) {

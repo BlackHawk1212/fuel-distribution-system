@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { OrderCreateComponent } from './order-create/order-create.component';
 import { CheckOrdersComponent } from './check-orders/check-orders.component';
 import { OrderRecievedConfirmationComponent } from './order-recieved-confirmation/order-recieved-confirmation.component';
+// import { ObjectToArrayPipe } from './check-orders/object-to-array.pipe';
 
 @NgModule({
   declarations: [

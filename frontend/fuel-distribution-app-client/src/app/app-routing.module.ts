@@ -8,7 +8,7 @@ const routes: Routes = [
   {path: '', redirectTo: 'createorder', pathMatch: 'full'},
   {path: 'createorder', component: OrderCreateComponent},
   {path: 'getorderscomplete', component: OrderRecievedConfirmationComponent},
-  {path: 'allorders', component: CheckOrdersComponent},
+  {path: 'getorders', component: CheckOrdersComponent},
 ];
 
 @NgModule({

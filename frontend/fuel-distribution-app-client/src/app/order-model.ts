@@ -2,6 +2,9 @@ import { FuelType } from "./fuelType";
 import { Quantity } from "./quantity";
 
 export class OrderModel {
+    static values(order: any) {
+      throw new Error('Method not implemented.');
+    }
     id!:string; // reference id
     stationId!:string;
     fuelType!:FuelType;

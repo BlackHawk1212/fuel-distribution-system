@@ -52,6 +52,10 @@ public class OrderService {
         return order.map(this::getStatus).orElse("Please check the reference number and try again!");
     }
 
+    public Optional<Order> getOrderById(String id) {
+        return orderRepository.findById(id);
+    }
+
     private String getStatus(Order order) {
         if (order.isDelivered()) {
             LocalDateTime deliveredDateTime = order.getDeliveredTime();

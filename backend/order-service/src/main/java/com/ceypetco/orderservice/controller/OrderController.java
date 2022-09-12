@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/services")
+//@CrossOrigin(origins = "http://localhost:4200")
 public class OrderController {
 
     @Autowired
@@ -42,7 +44,6 @@ public class OrderController {
         String status = orderService.checkOrderStatus(trimmedId);
         OrderServiceApplication.logger.info("order-service : Status for " + id + " is : " + status);
         return status;
-
     }
 
     @RequestMapping(value = "/orders/{id}", method = RequestMethod.POST)
@@ -50,6 +51,16 @@ public class OrderController {
         String status = orderService.confirmOrderReceive(id);
         OrderServiceApplication.logger.info("order-service : Confirmed order receive of " + id);
         return status;
+    }
+
+    @RequestMapping(value = "/orders/search/{id}", method = RequestMethod.GET)
+    public Object getOrderById(@PathVariable String id) {
+        Optional<Order> order = orderService.getOrderById(id);
+        if (order.isEmpty()) {
+            return "Order not available";
+        } else {
+            return order;
+        }
     }
 
     @RequestMapping(value = "/orders", method = RequestMethod.GET)

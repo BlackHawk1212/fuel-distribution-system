@@ -7,20 +7,27 @@ import { OrderService } from '../order.service';
   templateUrl: './check-orders.component.html',
   styleUrls: ['./check-orders.component.css']
 })
+
 export class CheckOrdersComponent implements OnInit {
 
+  id!:string;
+  scheduled!:string;
   orders!: OrderModel[];
+  datas: any;
+
   constructor(private orderService: OrderService) { }
 
   ngOnInit(): void {
-    this.getAllOrders();
+    // this.datas.id = "";
   }
 
-  private getAllOrders(){
-    this.orderService.fetchAllOrders().subscribe(data =>{
-      this.orders = data;
+   getOrderById(){
+    this.orderService.getOrderById(this.id).subscribe(data =>{
+      // this.orders = data;
+      this.datas = data; 
       console.log(data);
-    })
+    },
+    error => console.log(error));
   }
 
 }

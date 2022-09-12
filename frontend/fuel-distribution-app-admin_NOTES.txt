@@ -1,3 +1,7 @@
+Install Bootstrap
+	> npm install bootstrap
+
+
 Create components in fuel-distribution-app-admin (Use the cmd or terminal in project directory)
 * with .spec file (Which is no need to keep) #DELETE it#
 	> ng g c view-all-orders
