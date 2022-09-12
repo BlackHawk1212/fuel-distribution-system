@@ -22,11 +22,11 @@ export class OrderService {
     return this.httpClient.post(`${this.baseURL}`, order);
   }
 
-  getOrderById(id:string): Observable<OrderModel[]> {
+  getOrderById(id: string): Observable<OrderModel[]> {
     return this.httpClient.get<OrderModel[]>(`${this.searchURL}/${id}`);
   }
 
-  getOrderComplete(id:string, reserved:string) {
+  getOrderComplete(id: string, reserved: string) {
     return this.httpClient.put(`${this.baseURL}/${id}/${status}`, "");
   }
 
